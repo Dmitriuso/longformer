@@ -48,23 +48,24 @@ class LongformerSelfAttentionForBart(nn.Module):
 
     def forward(
         self,
-        query,
-        key: Optional[Tensor],
-        key_padding_mask: Optional[Tensor] = None,
-        layer_state: Optional[Dict[str, Optional[Tensor]]] = None,
-        attn_mask: Optional[Tensor] = None,
-        need_weights=False,
-        output_attentions=False,
-    ) -> Tuple[Tensor, Optional[Tensor]]:
+        hidden_states: Tensor,
+        key_value_states: Optional[Tensor] = None,
+        past_key_value: Optional[Tuple[Tensor]] = None,
+        attention_mask: Optional[Tensor] = None,
+        layer_head_mask: Optional[Tensor] = None,
+        output_attentions: bool = False,
 
-        tgt_len, bsz, embed_dim = query.size()
+    ) -> Tuple[Tensor, Optional[Tensor], Optional[Tuple[Tensor]]]:
+
+        is_cross_attention = key_value_states is not None
+        bsz, tgt_len, embed_dim = hidden_states.size()
         assert embed_dim == self.embed_dim
-        assert list(query.size()) == [tgt_len, bsz, embed_dim]
-        assert attn_mask is None
+        assert list(hidden_states.size()) == [tgt_len, bsz, embed_dim]
+        assert attention_mask is None
 
         outputs = self.longformer_self_attn(
-            query.transpose(0, 1),  # LongformerSelfAttention expects (bsz, seqlen, embd_dim)
-            attention_mask=key_padding_mask.unsqueeze(dim=1).unsqueeze(dim=1) * -1,
+            hidden_states.transpose(0, 1),  # LongformerSelfAttention expects (bsz, seqlen, embd_dim)
+            attention_mask=key_value_states.unsqueeze(dim=1).unsqueeze(dim=1) * -1,
             head_mask=None,
             encoder_hidden_states=None,
             encoder_attention_mask=None,
