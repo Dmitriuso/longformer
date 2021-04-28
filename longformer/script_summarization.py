@@ -305,14 +305,14 @@ def main(args):
 
     model.hf_datasets = nlp.load_dataset('mlsum', 'ru'[:10])
 
-    logger = TestTubeLogger(
-        save_dir=args.save_dir,
-        name=args.save_prefix,
-        version=0  # always use version=0
-    )
+    # logger = TestTubeLogger(
+    #     save_dir=args.save_dir,
+    #     name=args.save_prefix,
+    #     version=0  # always use version=0
+    # )
 
     checkpoint_callback = ModelCheckpoint(
-        filepath=os.path.join(args.save_dir, args.save_prefix, "checkpoints"),
+        # filepath=os.path.join(args.save_dir, args.save_prefix, "checkpoints"),
         save_top_k=5,
         verbose=True,
         monitor='avg_val_loss',
@@ -336,17 +336,19 @@ def main(args):
                          check_val_every_n_epoch=1 if not args.debug else 1,
                          val_percent_check=args.val_percent_check,
                          test_percent_check=args.val_percent_check,
-                         logger=logger,
+                         #logger=logger,
                          checkpoint_callback=checkpoint_callback if not args.disable_checkpointing else False,
                          show_progress_bar=not args.no_progress_bar,
                          use_amp=not args.fp32, amp_level='O2',
                          resume_from_checkpoint=args.resume_ckpt,
-                         weights_save_path="./trained_model/model",
+                         default_root_dir=args.save_dir,
+                         weights_save_path='./trained_model/pytorch_model.pt',
                          weights_summary='full'
                          )
     if not args.test:
         trainer.fit(model)
     trainer.test(model)
+    trainer.save_checkpoint(filepath="./pytorch_model.bin", weights_only=False)
 
 
 
