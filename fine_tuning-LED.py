@@ -12,7 +12,7 @@ rouge = load_metric("rouge")
 
 # load pubmed
 pubmed_train = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="train")
-pubmed_val = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="validation[:10%]")
+pubmed_val = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="validation")
 
 # comment out following lines for a test run
 # pubmed_train = pubmed_train.select(range(32))
@@ -62,6 +62,9 @@ def process_data_to_model_inputs(batch):
     ]
 
     return batch
+
+pubmed_train = pubmed_train.select(range(50000))
+pubmed_val = pubmed_val.select(range(5000))
 
 
 # map train data
