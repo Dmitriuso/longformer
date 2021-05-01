@@ -72,9 +72,9 @@ if __name__ == '__main__':
 
             input_ids = tokenizer(input_string, return_tensors="pt", padding="max_length",
                                   max_length=args.input_max_length, truncation=True).input_ids.to(device)
-            # global_attention_mask = torch.zeros_like(input_ids)
-            # # set global_attention_mask on first token
-            # global_attention_mask[:, 0] = 1
+            global_attention_mask = torch.zeros_like(input_ids)
+            # set global_attention_mask on first token
+            global_attention_mask[:, 0] = 1
             sequences = model.generate(input_ids, max_length=args.sum_max_length,
                                        length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
             summary = tokenizer.batch_decode(sequences)
