@@ -58,7 +58,7 @@ def chunks(lst, n):
 if __name__ == '__main__':
     with open(args.output_file, 'a+') as f:
         start_time = time.time()
-        for input_string in src_list_clean[0:1000]:
+        for input_string in src_list_clean:
             inputs = tokenizer.encode(args.prefix + input_string, return_tensors='pt', max_length=args.input_max_length,
                                      padding=True, truncation=True).to(device)
             output = model.generate(inputs, max_length=args.sum_max_length, length_penalty=args.length_penalty,

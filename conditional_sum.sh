@@ -7,4 +7,5 @@ python conditional_sum-simple-mBART-extended.py \
 	--input_max_length 8192 \
 	--sum_max_length 128 \
 	--num_beams 2 \
-  	--length_penalty 0.7
+  	--length_penalty 0.7 \
+    --device 0
