@@ -60,7 +60,7 @@ def generate_answer(batch, device):
 
   predicted_abstract_ids = model.generate(input_ids, attention_mask=global_attention_mask)
   summary = tokenizer.batch_decode(predicted_abstract_ids, skip_special_tokens=True)
-  return summary
+  return str(summary)
 
 
 if __name__ == '__main__':
