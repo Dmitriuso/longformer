@@ -49,24 +49,34 @@ for i in src_list:
     j = i.rstrip()
     src_list_clean.append(j)
 
-def chunks(lst, n):
-    """Yield successive n-sized chunks from lst."""
-    for i in range(0, len(lst), n):
-        yield lst[i : i + n]
+
+def generate_answer(batch, device):
+  inputs_dict = tokenizer(batch, padding="max_length", max_length=args.input_max_length, return_tensors="pt", truncation=True)
+  input_ids = inputs_dict.input_ids.to(device)
+  attention_mask = inputs_dict.attention_mask.to(device)
+  global_attention_mask = torch.zeros_like(attention_mask)
+  # put global attention on <s> token
+  global_attention_mask[:, 0] = 1
+
+  predicted_abstract_ids = model.generate(input_ids, attention_mask=attention_mask, global_attention_mask=global_attention_mask)
+  summary = tokenizer.batch_decode(predicted_abstract_ids, skip_special_tokens=True)
+  return summary
 
 
 if __name__ == '__main__':
     with open(args.output_file, 'w') as f:
         start_time = time.time()
         for input_string in src_list_clean:
-            input_ids = tokenizer(input_string, return_tensors="pt", max_length=args.input_max_length,
-                                  padding=True, truncation=True).input_ids.to(device)
-            global_attention_mask = torch.zeros_like(input_ids)
-            # set global_attention_mask on first token
-            global_attention_mask[:, 0] = 1
-            sequences = model.generate(input_ids, global_attention_mask=global_attention_mask, max_length=args.sum_max_length,
-                                       length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
-            summary = tokenizer.batch_decode(sequences)
+            summary = generate_answer(batch=input_string, device=device)
+
+            # input_ids = tokenizer(input_string, return_tensors="pt", max_length=args.input_max_length,
+            #                       padding=True, truncation=True).input_ids.to(device)
+            # global_attention_mask = torch.zeros_like(input_ids)
+            # # set global_attention_mask on first token
+            # global_attention_mask[:, 0] = 1
+            # sequences = model.generate(input_ids, global_attention_mask=global_attention_mask, max_length=args.sum_max_length,
+            #                            length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
+            # summary = tokenizer.batch_decode(sequences)
 
             # inputs = tokenizer.encode(args.prefix + input_string, return_tensors='pt', max_length=args.input_max_length,
             #                          padding=True, truncation=True).to(device)
