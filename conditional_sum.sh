@@ -6,6 +6,6 @@ python conditional_sum-simple-mBART-extended.py \
 	--eval_file ./evaluation/metrics-LongmBART-25-8K-wiki-15-extended.json \
 	--device cuda:0 \
 	--input_max_length 8192 \
-#	--sum_max_length 128 \
-#	--num_beams 2 \
-#  	--length_penalty 0.7
+	--sum_max_length 128 \
+	--num_beams 2 \
+  	--length_penalty 0.7
