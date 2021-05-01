@@ -63,8 +63,8 @@ def process_data_to_model_inputs(batch):
 
     return batch
 
-pubmed_train = pubmed_train.select(range(500))
-pubmed_val = pubmed_val.select(range(50))
+pubmed_train = pubmed_train.select(range(50000))
+pubmed_val = pubmed_val.select(range(5000))
 
 
 # map train data
