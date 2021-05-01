@@ -8,4 +8,4 @@ python conditional_sum-simple-mBART-extended.py \
 	--sum_max_length 128 \
 	--num_beams 2 \
   	--length_penalty 0.7 \
-    --device 0
+    --device cuda:0

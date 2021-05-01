@@ -38,7 +38,7 @@ class LongformerEncoderDecoderForConditionalGeneration(MBartForConditionalGenera
         #     layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
 
 
-model = LongformerEncoderDecoderForConditionalGeneration.from_pretrained(args.model_path)
+model = LongformerEncoderDecoderForConditionalGeneration.from_pretrained(args.model_path).to(device)
 
 
 src_list = open(args.input_file).readlines()
