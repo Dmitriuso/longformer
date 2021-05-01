@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
             # summary = generate_answer(batch=input_string, device=device)
 
-            input_ids = tokenizer([input_string], return_tensors="pt", padding="max_length",
+            input_ids = tokenizer(input_string, return_tensors="pt", padding="max_length",
                                   max_length=args.input_max_length, truncation=True).input_ids.to(device)
             # global_attention_mask = torch.zeros_like(input_ids)
             # # set global_attention_mask on first token
