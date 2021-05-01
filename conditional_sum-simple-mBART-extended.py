@@ -66,7 +66,8 @@ for i in src_list:
 if __name__ == '__main__':
     with open(args.output_file, 'w') as f:
         start_time = time.time()
-        for input_string in src_list_clean:
+        #for input_string in src_list_clean[0:5]:
+
             # summary = generate_answer(batch=input_string, device=device)
 
             # input_ids = tokenizer(input_string, return_tensors="pt", max_length=args.input_max_length,
@@ -78,11 +79,13 @@ if __name__ == '__main__':
             #                            length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
             # summary = tokenizer.batch_decode(sequences)
 
-            inputs = tokenizer.encode(args.prefix + input_string, return_tensors='pt', padding="max_length",
-                                      max_length=args.input_max_length, truncation=True).to(device)
-            output = model.generate(inputs, max_length=args.sum_max_length, length_penalty=args.length_penalty,
-                                    num_beams=args.num_beams, early_stopping=True)
-            summary = tokenizer.decode(output[0], skip_special_tokens=True, clean_up_tokenization_spaces=True)
+        inputs = tokenizer.encode(src_list_clean[0:5], return_tensors='pt', padding="max_length",
+                                  max_length=args.input_max_length, truncation=True).to(device)
+        summary_ids = model.generate(inputs['input_ids'], max_length=args.sum_max_length, length_penalty=args.length_penalty,
+                                num_beams=args.num_beams, early_stopping=True)
+
+        for g in summary_ids:
+            summary = tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True)
             print(summary)
             f.write(summary + "\n")
             f.flush()
