@@ -58,7 +58,7 @@ def generate_answer(batch, device):
   # put global attention on <s> token
   global_attention_mask[:, 0] = 1
 
-  predicted_abstract_ids = model.generate(input_ids, attention_mask=attention_mask)
+  predicted_abstract_ids = model.generate(input_ids)
   summary = tokenizer.batch_decode(predicted_abstract_ids, skip_special_tokens=True)
   return str(summary)
 
@@ -68,16 +68,16 @@ if __name__ == '__main__':
         start_time = time.time()
         for input_string in src_list_clean[:100]:
 
-            # summary = generate_answer(batch=input_string, device=device)
+            summary = generate_answer(batch=input_string, device=device)
 
-            input_ids = tokenizer(input_string, return_tensors="pt", padding="max_length",
-                                  max_length=args.input_max_length, truncation=True).input_ids.to(device)
-            global_attention_mask = torch.zeros_like(input_ids)
-            # set global_attention_mask on first token
-            global_attention_mask[:, 0] = 1
-            sequences = model.generate(input_ids, attention_mask=global_attention_mask, max_length=args.sum_max_length,
-                                       length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
-            summary = tokenizer.batch_decode(sequences)
+            # input_ids = tokenizer(input_string, return_tensors="pt", padding="max_length",
+            #                       max_length=args.input_max_length, truncation=True).input_ids.to(device)
+            # global_attention_mask = torch.zeros_like(input_ids)
+            # # set global_attention_mask on first token
+            # global_attention_mask[:, 0] = 1
+            # sequences = model.generate(input_ids, attention_mask=global_attention_mask, max_length=args.sum_max_length,
+            #                            length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
+            # summary = tokenizer.batch_decode(sequences)
 
             # inputs = tokenizer.encode([input_string], return_tensors='pt', padding="max_length",
             #                           max_length=args.input_max_length, truncation=True).to(device)
