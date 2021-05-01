@@ -79,7 +79,7 @@ if __name__ == '__main__':
             #                            length_penalty=args.length_penalty, num_beams=args.num_beams, early_stopping=True).sequences
             # summary = tokenizer.batch_decode(sequences)
 
-        inputs = tokenizer.encode(src_list_clean[0:5], return_tensors='pt', padding="max_length",
+        inputs = tokenizer.encode(src_list_clean[0:1], return_tensors='pt', padding="max_length",
                                   max_length=args.input_max_length, truncation=True).to(device)
         summary_ids = model.generate(inputs['input_ids'], max_length=args.sum_max_length, length_penalty=args.length_penalty,
                                 num_beams=args.num_beams, early_stopping=True)
