@@ -38,7 +38,7 @@ class LongformerEncoderDecoderForConditionalGeneration(MBartForConditionalGenera
         #     layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
 
 
-model = MBartForConditionalGeneration.from_pretrained(args.model_path).to(device)
+model = LongformerEncoderDecoderForConditionalGeneration.from_pretrained(args.model_path).to(device)
 
 
 src_list = open(args.input_file).readlines()
@@ -85,7 +85,7 @@ if __name__ == '__main__':
                                     num_beams=args.num_beams, early_stopping=True)
 
             for g in summary_ids:
-                summary = tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True)
+                summary = tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False)
                 print(summary)
                 f.write(summary + "\n")
                 f.flush()
