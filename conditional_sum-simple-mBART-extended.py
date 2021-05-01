@@ -58,7 +58,7 @@ def generate_answer(batch, device):
   # put global attention on <s> token
   global_attention_mask[:, 0] = 1
 
-  predicted_abstract_ids = model.generate(input_ids, attention_mask=global_attention_mask)
+  predicted_abstract_ids = model.generate(input_ids, attention_mask=attention_mask)
   summary = tokenizer.batch_decode(predicted_abstract_ids, skip_special_tokens=True)
   return str(summary)
 
