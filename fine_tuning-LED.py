@@ -25,7 +25,7 @@ tokenizer = AutoTokenizer.from_pretrained("allenai/led-large-16384")
 # max encoder length is 8192 for PubMed
 encoder_max_length = 8192
 decoder_max_length = 512
-batch_size = 2
+batch_size = 1
 
 
 def process_data_to_model_inputs(batch):
