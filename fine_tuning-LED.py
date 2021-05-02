@@ -11,8 +11,8 @@ from transformers import (
 rouge = load_metric("rouge")
 
 # load pubmed
-pubmed_train = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="train")
-pubmed_val = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="validation")
+pubmed_train = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="train", cache_dir="../datasets")
+pubmed_val = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="validation", cache_dir="../datasets")
 
 # comment out following lines for a test run
 # pubmed_train = pubmed_train.select(range(32))
