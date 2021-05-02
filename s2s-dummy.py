@@ -8,9 +8,9 @@ tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
 class LongformerEncoderDecoderForConditionalGeneration(MBartForConditionalGeneration):
     def __init__(self, config):
         super().__init__(config)
-        # # self.model.encoder.embed_positions =
-        # for i, layer in enumerate(self.model.encoder.layers):
-        #     layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
+        # self.model.encoder.embed_positions =
+        for i, layer in enumerate(self.model.encoder.layers):
+            layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
         # for i, layer in enumerate(self.model.decoder.layers):
         #     layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
 
