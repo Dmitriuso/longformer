@@ -98,14 +98,15 @@ pubmed_val.set_format(
 # enable fp16 apex training
 training_args = Seq2SeqTrainingArguments(
     predict_with_generate=True,
-    evaluation_strategy="epoch",
+    evaluation_strategy="steps",
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
     fp16=True,
     sharded_ddp="simple",
     output_dir="./LED-pubmed",
     overwrite_output_dir=True,
-    logging_steps=5,
+    logging_steps=250,
+    eval_steps=5000,
     save_steps=500,
     warmup_steps=1500,
     save_total_limit=2,
