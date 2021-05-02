@@ -15,14 +15,14 @@ class LongformerEncoderDecoderForConditionalGeneration(MBartForConditionalGenera
         #     layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
 
 
-model = MBartForConditionalGeneration.from_pretrained("../LongMBART-25-8K")
+model = MBartForConditionalGeneration.from_pretrained("../LongMBART-25-2K")
 #model = MBartForConditionalGeneration.from_pretrained("./model3")
 
 train_dataset = load_dataset("scientific_papers", "pubmed", split="train", cache_dir="../datasets")
 val_dataset = load_dataset("scientific_papers", "pubmed", split="validation", cache_dir="../datasets")
 
-max_input_length = 8192
-max_output_length = 512
+max_input_length = 2048
+max_output_length = 256
 batch_size = 1
 
 
