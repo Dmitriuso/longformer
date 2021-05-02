@@ -15,7 +15,7 @@ class LongformerEncoderDecoderForConditionalGeneration(MBartForConditionalGenera
         #     layer.self_attn = LongformerSelfAttentionForBart(config, layer_id=i)
 
 
-model = MBartForConditionalGeneration.from_pretrained("../LongMBART-25-2K")
+model = LongformerEncoderDecoderForConditionalGeneration.from_pretrained("../LongMBART-25-2K")
 #model = MBartForConditionalGeneration.from_pretrained("./model3")
 
 train_dataset = load_dataset("scientific_papers", "pubmed", split="train", cache_dir="../datasets")
