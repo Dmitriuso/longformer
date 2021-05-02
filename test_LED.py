@@ -4,7 +4,7 @@ from datasets import load_dataset, load_metric
 from transformers import LEDTokenizer, LEDForConditionalGeneration
 
 # load pubmed
-pubmed_test = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="test")
+pubmed_test = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="test[:100]")
 
 # load tokenizer
 tokenizer = LEDTokenizer.from_pretrained("../LED-pubmed/checkpoint-1500")
