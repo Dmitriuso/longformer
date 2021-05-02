@@ -18,8 +18,8 @@ class LongformerEncoderDecoderForConditionalGeneration(MBartForConditionalGenera
 model = LongformerEncoderDecoderForConditionalGeneration.from_pretrained("../LongMBART-25-8K")
 #model = MBartForConditionalGeneration.from_pretrained("./model3")
 
-train_dataset = load_dataset("scientific_papers", "pubmed", split="train")
-val_dataset = load_dataset("scientific_papers", "pubmed", split="validation")
+train_dataset = load_dataset("scientific_papers", "pubmed", split="train", cache_dir="../datasets")
+val_dataset = load_dataset("scientific_papers", "pubmed", split="validation", cache_dir="../datasets")
 
 max_input_length = 8192
 max_output_length = 512
