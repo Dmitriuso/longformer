@@ -7,8 +7,8 @@ from transformers import LEDTokenizer, LEDForConditionalGeneration
 pubmed_test = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="test")
 
 # load tokenizer
-tokenizer = LEDTokenizer.from_pretrained("LED-pubmed/checkpoint-1500")
-model = LEDForConditionalGeneration.from_pretrained("LED-pubmed/checkpoint-1500").to("cuda").half()
+tokenizer = LEDTokenizer.from_pretrained("../LED-pubmed/checkpoint-1500")
+model = LEDForConditionalGeneration.from_pretrained("../LED-pubmed/checkpoint-1500").to("cuda").half()
 
 
 def generate_answer(batch):
