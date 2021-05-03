@@ -1,14 +1,14 @@
 import torch
 
 from datasets import load_dataset, load_metric
-from transformers import LEDTokenizer, LEDForConditionalGeneration
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 # load pubmed
 pubmed_test = load_dataset("scientific_papers", "pubmed", ignore_verifications=True, split="test[:100]")
 
 # load tokenizer
-tokenizer = LEDTokenizer.from_pretrained("../LongMBART-pubmed/checkpoint-43000")
-model = LEDForConditionalGeneration.from_pretrained("../LongMBART-pubmed/checkpoint-43000").to("cuda").half()
+tokenizer = AutoTokenizer.from_pretrained("../LongMBART-pubmed/checkpoint-43000")
+model = AutoModelForSeq2SeqLM.from_pretrained("../LongMBART-pubmed/checkpoint-43000").to("cuda").half()
 
 
 def generate_answer(batch):
